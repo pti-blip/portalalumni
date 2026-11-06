@@ -1,0 +1,679 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Alumni PTI Raharja</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700;6..12,800&family=Lexend:wght@500;600;700&display=swap">
+<style>
+/* Layout: yellow gradient top bar with navy text + horizontal nav + content sections (public alumni portal, Prodi PTI) */
+:root{
+  --blue-1:#1c52c4; --blue-2:#123a92; --gold:#ffc829; --gold-2:#ffdf6b; --gold-ink:#2b2000; --navy:#13254f; --gold-soft:#fff4cc;
+  --bg:#fffaeb; --surface:#ffffff; --surface-2:#fff8e3; --line:#f0e1ad; --ink:#14213a; --ink-2:#5a6784;
+  --primary:#1d5fd6; --primary-hover:#164cb0; --primary-soft:#e6eefd;
+  --ok:#138a5e; --ok-soft:#e3f5ec; --warn:#b07a00; --warn-bg:#fff6e0; --danger:#d64545; --danger-bg:#fdecec;
+  --c1:#1d5fd6; --c2:#ffc829; --c3:#138a5e; --c4:#c2416b; --c5:#7a5af0; --c6:#5a6784;
+  --shadow:0 1px 2px rgba(18,58,146,.06),0 6px 18px rgba(18,58,146,.06);
+  --font:"Nunito Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --display:"Lexend","Nunito Sans",system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --blue-1:#163f99; --blue-2:#0c2766;
+  --bg:#0d1424; --surface:#141d31; --surface-2:#19243c; --line:#283652; --gold-soft:#2b2610; --ink:#e4eaf6; --ink-2:#98a6c0;
+  --primary:#4f8cf2; --primary-hover:#6a9ef6; --primary-soft:#1b2c50; --ok:#2bb07a; --ok-soft:#14322a;
+  --warn:#e3b341; --warn-bg:#3a2f10; --danger:#ef6464; --danger-bg:#3b1d1d; --c1:#4f8cf2; --c3:#2bb07a; --c4:#d9608a; --c6:#98a6c0; --shadow:none; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --blue-1:#163f99; --blue-2:#0c2766;
+  --bg:#0d1424; --surface:#141d31; --surface-2:#19243c; --line:#283652; --gold-soft:#2b2610; --ink:#e4eaf6; --ink-2:#98a6c0;
+  --primary:#4f8cf2; --primary-hover:#6a9ef6; --primary-soft:#1b2c50; --ok:#2bb07a; --ok-soft:#14322a;
+  --warn:#e3b341; --warn-bg:#3a2f10; --danger:#ef6464; --danger-bg:#3b1d1d; --c1:#4f8cf2; --c3:#2bb07a; --c4:#d9608a; --c6:#98a6c0; --shadow:none; color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--font);font-size:14.5px;line-height:1.5}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+a{color:var(--primary)}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+
+/* Shell: yellow sidebar + white top bar */
+.shell{display:flex;min-height:100vh}
+.side{width:252px;flex:none;position:sticky;top:0;height:100vh;overflow-y:auto;background:linear-gradient(180deg,var(--gold-2),var(--gold) 45%,#ffb300);color:var(--navy);display:flex;flex-direction:column;border-right:4px solid var(--blue-1);padding-left:env(safe-area-inset-left,0px);z-index:30}
+.brand{display:flex;gap:10px;align-items:center;text-decoration:none;color:var(--navy);padding:20px 18px 18px;border-bottom:2px solid rgba(19,37,79,.12)}
+.logo{width:44px;height:44px;border-radius:12px;background:var(--blue-1);color:var(--gold);display:grid;place-items:center;flex:none;box-shadow:0 3px 8px rgba(18,58,146,.3)}
+.brand b{font-family:var(--display);font-size:19px;font-weight:700;display:block;line-height:1.15}
+.brand small{display:block;font-size:11.5px;font-weight:700;opacity:.8;line-height:1.3}
+.nav{display:grid;gap:4px;padding:14px 12px;flex:1;align-content:start}
+.nav h6{margin:10px 8px 4px;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;opacity:.7}
+.nav a{display:flex;align-items:center;gap:11px;color:var(--navy);text-decoration:none;font-weight:800;padding:10px 12px;border-radius:11px;font-size:14px}
+.nav a svg{width:18px;height:18px;flex:none}
+.nav a:hover{background:rgba(255,255,255,.4)}
+.nav a.on{background:var(--blue-1);color:#fff;box-shadow:0 4px 12px rgba(18,58,146,.3)}
+.nav a.on svg{color:var(--gold)}
+.side-f{padding:14px 18px 20px;font-size:11.5px;font-weight:700;opacity:.8;line-height:1.45;border-top:2px solid rgba(19,37,79,.12)}
+.main{flex:1;min-width:0;display:flex;flex-direction:column}
+.top{background:var(--surface);border-bottom:3px solid var(--gold);position:sticky;top:0;z-index:15;display:flex;align-items:center;gap:12px;padding:12px max(24px,env(safe-area-inset-right,0px)) 12px 24px}
+.crumb{flex:1;min-width:0;font-weight:800;color:var(--blue-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb span{color:var(--ink-2);font-weight:700}
+.menu-btn{display:none;border:1px solid var(--line);background:var(--gold);color:var(--navy);border-radius:9px;padding:6px 10px;font-weight:800;cursor:pointer}
+.who{display:flex;align-items:center;gap:8px;font-size:12.5px;white-space:nowrap;color:var(--ink-2)}
+.who .pill{border:1.5px solid var(--blue-1);color:var(--blue-2);background:var(--gold-soft);border-radius:999px;padding:3px 10px;font-weight:800}
+.scrim{display:none}
+@media (max-width:860px){
+  .side{position:fixed;left:0;top:0;bottom:0;height:auto;transform:translateX(-105%);transition:transform .2s;box-shadow:6px 0 24px rgba(0,0,0,.2)}
+  .shell.open .side{transform:none}
+  .shell.open .scrim{display:block;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:25}
+  .menu-btn{display:inline-block}
+  .top{padding-left:max(16px,env(safe-area-inset-left,0px))}
+}
+@media (prefers-reduced-motion:reduce){.side{transition:none}}
+
+main{padding-block:26px 50px;width:100%}
+.page-h{display:flex;justify-content:space-between;align-items:flex-end;gap:14px;flex-wrap:wrap;margin-bottom:18px}
+.page-h h1{margin:0;font-family:var(--display);font-weight:600;font-size:26px;text-wrap:balance;color:var(--blue-2)}
+.page-h h1::after{content:"";display:block;width:56px;height:5px;border-radius:3px;background:var(--gold);margin-top:8px}
+.page-h p{margin:4px 0 0;color:var(--ink-2);max-width:70ch}
+.btn{border:0;border-radius:9px;padding:10px 16px;font-weight:800;cursor:pointer;display:inline-flex;gap:6px;align-items:center;text-decoration:none;white-space:nowrap}
+.btn-primary{background:var(--primary);color:#fff}.btn-primary:hover{background:var(--primary-hover)}
+.btn-gold{background:var(--gold);color:var(--gold-ink)}.btn-gold:hover{filter:brightness(.95)}
+.btn-ghost{background:var(--surface);border:1px solid var(--line)}
+.btn-danger{background:var(--danger);color:#fff}
+.btn-sm{padding:6px 11px;font-size:13px}
+.btn[disabled]{opacity:.5;cursor:not-allowed}
+
+/* Hero */
+.hero{background:linear-gradient(120deg,var(--gold) 0%,var(--gold-2) 60%,#fff1b8 100%);color:var(--navy);border:1px solid #f2cf55;box-shadow:0 10px 30px rgba(176,122,0,.18);border-radius:18px;padding:34px 34px 30px;position:relative;overflow:hidden;margin-bottom:22px}
+.hero::after{content:"";position:absolute;right:-70px;top:-70px;width:280px;height:280px;border-radius:50%;background:#fff;opacity:.4}
+.hero::before{content:"";position:absolute;right:120px;bottom:-90px;width:180px;height:180px;border-radius:50%;border:22px solid #fff;opacity:.35}
+.hero h1{font-family:var(--display);font-weight:700;font-size:32px;line-height:1.2;margin:0 0 10px;max-width:22ch;text-wrap:balance}
+.hero p{margin:0 0 20px;max-width:60ch;opacity:.92;font-size:15.5px}
+.hero .acts{display:flex;gap:10px;flex-wrap:wrap;position:relative;z-index:1}
+.hero .btn-ghost{background:rgba(255,255,255,.55);color:var(--navy);border-color:var(--navy)}
+.hero .eyebrow{display:inline-block;background:var(--blue-1);color:var(--gold);font-weight:800;font-size:12px;letter-spacing:.06em;text-transform:uppercase;border-radius:999px;padding:4px 12px;margin-bottom:12px;position:relative;z-index:1}
+.hero h1,.hero p{position:relative;z-index:1}
+
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:22px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px;border-left:6px solid var(--gold);box-shadow:var(--shadow)}
+.stat b{color:var(--blue-2)}
+.stat b{display:block;font-family:var(--display);font-size:26px;font-weight:600;font-variant-numeric:tabular-nums;line-height:1.15}
+.stat span{color:var(--ink-2);font-size:12.5px;font-weight:700}
+
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);margin-bottom:18px;min-width:0}
+.card-h{padding:14px 18px;border-bottom:1px solid var(--line);background:var(--gold-soft);border-radius:14px 14px 0 0;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.card-h h2{margin:0;font-size:15px;font-weight:800;color:var(--blue-2);flex:1}
+.card-h h2::before{content:"";display:inline-block;width:8px;height:8px;border-radius:2px;background:var(--gold);margin-right:8px;vertical-align:2px;box-shadow:0 0 0 2px var(--blue-1)}
+.card-b{padding:16px 18px}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-bottom:18px}
+.grid2>.card{margin-bottom:0}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.empty{color:var(--ink-2);text-align:center;padding:26px 10px}
+.muted{color:var(--ink-2)}
+.note{border-radius:10px;padding:10px 14px;font-weight:700;margin-bottom:16px;background:var(--primary-soft);color:var(--primary)}
+.note.warn{background:var(--warn-bg);color:var(--warn)}
+.note.bad{background:var(--danger-bg);color:var(--danger)}
+
+/* Alumni cards */
+.filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+.filters input,.filters select{border:1px solid var(--line);background:var(--surface);border-radius:9px;padding:9px 12px}
+.filters input{flex:1;min-width:200px}
+.acard{background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--gold);border-radius:14px;padding:16px;box-shadow:var(--shadow);display:grid;gap:10px;align-content:start}
+.acard-top{display:flex;gap:12px;align-items:center}
+.av{width:46px;height:46px;border-radius:50%;background:var(--gold);color:var(--navy);display:grid;place-items:center;font-weight:800;flex:none;border:2px solid var(--gold)}
+.acard h3{margin:0;font-size:15.5px;line-height:1.3}
+.acard .sub{color:var(--ink-2);font-size:12.5px}
+.tag{display:inline-block;border-radius:6px;padding:2px 8px;font-size:11.5px;font-weight:800}
+.t-blue{background:var(--primary-soft);color:var(--primary)}.t-gold{background:var(--gold);color:var(--gold-ink)}.t-green{background:var(--ok-soft);color:var(--ok)}.t-red{background:var(--danger-bg);color:var(--danger)}.t-gray{background:var(--surface-2);color:var(--ink-2);border:1px solid var(--line)}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:3px 10px;font-size:13px}
+.kv dt{color:var(--ink-2)}.kv dd{margin:0;font-weight:700;min-width:0;overflow-wrap:anywhere}
+.acard-f{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+
+/* Bars */
+.bars{display:grid;gap:9px}
+.bar{display:grid;grid-template-columns:minmax(110px,180px) 1fr 64px;gap:10px;align-items:center;font-size:13px}
+.bar-t{height:14px;border-radius:7px;background:var(--surface-2);border:1px solid var(--line);overflow:hidden}
+.bar-f{height:100%;border-radius:7px;background:var(--primary)}
+.bar b{text-align:right;font-variant-numeric:tabular-nums}
+.bar2 .bar-t{height:9px}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12.5px;color:var(--ink-2);margin-bottom:10px}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.kpi{display:flex;align-items:baseline;gap:8px}.kpi b{font-family:var(--display);font-size:30px}
+
+/* Forms */
+.form{display:grid;gap:14px}
+.fgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.fgrid .full{grid-column:1/-1}
+label{display:grid;gap:5px;font-weight:700;font-size:13.5px}
+label .hint{font-weight:400;color:var(--ink-2);font-size:12px}
+input,select,textarea{border:1px solid var(--line);background:var(--surface-2);border-radius:9px;padding:9px 12px;width:100%}
+textarea{min-height:90px;resize:vertical}
+.check{display:flex;gap:8px;align-items:flex-start;font-weight:600}.check input{width:auto;margin-top:3px}
+fieldset{min-width:0;border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:0}
+legend{font-weight:800;color:var(--primary);padding:0 6px}
+.scale{width:100%;border-collapse:collapse}
+.scale th,.scale td{border-bottom:1px solid var(--line);padding:8px 6px;text-align:center;font-size:13px}
+.scale th:first-child,.scale td:first-child{text-align:left}
+.scale input{width:auto}
+.err{color:var(--danger);font-weight:700}
+.form-f{display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap}
+
+/* Jobs & stories */
+.job{border:1px solid var(--line);border-left:4px solid var(--gold);border-radius:12px;padding:14px 16px;background:var(--surface);display:grid;gap:6px}
+.job h3{margin:0;font-size:15.5px}
+.job.past{opacity:.6;border-left-color:var(--line)}
+.story{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;position:relative}
+.story::before{content:"“";position:absolute;top:-8px;left:14px;font-family:Georgia,serif;font-size:56px;color:var(--gold);line-height:1}
+.story p{margin:10px 0 12px;line-height:1.65}
+.story footer{font-size:13px;color:var(--ink-2)}.story footer b{color:var(--ink)}
+
+table.t{width:100%;border-collapse:collapse}
+table.t th,table.t td{border-bottom:1px solid var(--line);padding:9px 10px;text-align:left;font-size:13px;vertical-align:top}
+table.t th{background:var(--surface-2);font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-2)}
+.tbl{overflow-x:auto}
+
+.overlay{position:fixed;inset:0;background:rgba(6,20,50,.5);display:grid;place-items:center;z-index:50;padding:16px}
+.modal{background:var(--surface);border-radius:16px;width:100%;max-width:640px;max-height:90vh;overflow:auto;border:1px solid var(--line)}
+.toast{color:var(--navy)!important;background:var(--gold)!important;border-left-color:var(--blue-1)!important;position:fixed;right:max(20px,env(safe-area-inset-right,0px));bottom:calc(20px + env(safe-area-inset-bottom,0px));background:var(--blue-2);color:#fff;padding:10px 16px;border-radius:10px;font-weight:700;z-index:60;border-left:4px solid var(--gold)}
+footer.site{width:100%;border-top:4px solid var(--gold);background:var(--blue-2);color:#fff;margin-top:auto;padding-top:18px!important;max-width:none;font-size:12.5px;text-align:center;padding-block:10px 30px}
+
+@media (max-width:900px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.grid3{grid-template-columns:repeat(2,minmax(0,1fr))}.grid2{grid-template-columns:1fr}}
+@media (max-width:600px){.grid3{grid-template-columns:1fr}.fgrid{grid-template-columns:1fr}.hero{padding:24px 20px}.hero h1{font-size:25px}.who .lbl{display:none}.bar{grid-template-columns:96px 1fr 52px}.page-h h1{font-size:22px}}
+</style>
+</head>
+<body>
+
+
+<div class="shell" id="shell">
+<aside class="side" id="side">
+  <a class="brand" href="#beranda"><span class="logo"><svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor" aria-hidden="true"><path d="M12 3 1 9l11 6 9-4.9V17h2V9L12 3zm-6 9.2V16c0 2.2 2.7 4 6 4s6-1.8 6-4v-3.8l-6 3.3-6-3.3z"/></svg></span>
+    <span><b>Alumni PTI</b><small>S1 Pendidikan Teknologi Informasi<br>Universitas Raharja</small></span></a>
+  <nav class="nav" id="nav" aria-label="Menu"><h6>Jejaring</h6><a href="#beranda"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3 2 11h3v9h5v-6h4v6h5v-9h3L12 3z"/></svg>Beranda</a><a href="#direktori"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM8 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm0 2c-2.7 0-8 1.3-8 4v3h16v-3c0-2.7-5.3-4-8-4zm8 0c-.3 0-.7 0-1.1.1 1.2.9 2.1 2.1 2.1 3.9v3h7v-3c0-2.7-5.3-4-8-4z"/></svg>Direktori Alumni</a><a href="#statistik"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 20h4V10H4v10zm6 0h4V4h-4v16zm6 0h4v-7h-4v7z"/></svg>Statistik</a><h6>Untuk Alumni</h6><a href="#profil"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm0 2c-4 0-8 2-8 5v2h16v-2c0-3-4-5-8-5z"/></svg>Profil Saya</a><a href="#tracer"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 2h9l5 5v15H6V2zm8 1.5V8h4.5L14 3.5zM8 12h8v2H8v-2zm0 4h8v2H8v-2z"/></svg>Tracer Study</a><a href="#karier"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M10 3h4a2 2 0 0 1 2 2v2h4a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h4V5a2 2 0 0 1 2-2zm0 4h4V5h-4v2z"/></svg>Info Karier</a><a href="#cerita"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 4h16v12H7l-3 3V4zm4 4v2h8V8H8zm0 4h5v-2H8v2z"/></svg>Cerita Alumni</a></nav>
+  <div class="side-f"><a href="#akun" style="color:var(--navy);font-weight:800">Akun Saya</a><br>Ikatan Alumni Prodi PTI<br>FKIP Universitas Raharja</div>
+</aside>
+<div class="scrim" id="scrim"></div>
+<div class="main">
+  <header class="top"><button class="menu-btn" id="menuBtn" aria-label="Buka menu">☰ Menu</button><div class="crumb" id="crumb"></div><div class="who" id="who"><span class="lbl">Memuat…</span></div></header>
+  <main class="wrap" id="app"></main>
+  <footer class="site wrap">Ikatan Alumni Program Studi S1 Pendidikan Teknologi Informasi · Fakultas Keguruan dan Ilmu Pendidikan · Universitas Raharja</footer>
+</div>
+</div>
+<div class="overlay" id="ov" hidden><div class="modal" role="dialog" aria-modal="true" id="ovBody"></div></div>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+/* ================= Konstanta ================= */
+const PROFIL = [["PL01","Pendidik/Guru Bidang TIK"],["PL02","Tenaga Profesional Bidang TIK"],["PL03","Technopreneur"],["PL04","Instruktur/Widyaiswara/Trainer"],["LAIN","Bidang lain"]];
+const STATUS = ["Bekerja","Wirausaha","Bekerja dan studi lanjut","Studi lanjut","Belum bekerja"];
+const INSTANSI = ["Sekolah / lembaga pendidikan","Perusahaan bidang TI","Instansi pemerintah","Perusahaan non-TI","Usaha sendiri","Lainnya"];
+const SESUAI = ["Sangat sesuai","Sesuai","Kurang sesuai","Tidak sesuai"];
+const KOMP = ["Etika","Keahlian bidang TI dan kependidikan","Bahasa Inggris","Penggunaan teknologi informasi","Komunikasi","Kerja sama tim","Pengembangan diri"];
+const CARA = ["Iklan / portal lowongan","Media sosial / LinkedIn","Relasi dosen atau kampus","Kenalan / keluarga","Bursa kerja kampus","Magang / KKP berlanjut","Membuka usaha sendiri","Lainnya"];
+const GAJI = ["< Rp3 juta","Rp3–5 juta","Rp5–8 juta","Rp8–12 juta","> Rp12 juta","Tidak ingin menjawab"];
+const JENIS = ["Penuh waktu","Paruh waktu","Guru / pendidik","Magang","Proyek / freelance"];
+const BULAN = (n) => n===""||n===null||n===undefined ? "–" : `${n} bulan`;
+
+/* ================= Utilitas ================= */
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const fmt = (v,d=1) => (v===null||v===undefined||isNaN(v)) ? "–" : Number(v).toLocaleString("id-ID",{maximumFractionDigits:d});
+const pct = (a,b) => b ? a/b*100 : null;
+const initials = n => String(n||"?").trim().split(/\s+/).slice(0,2).map(x=>x[0]||"").join("").toUpperCase() || "?";
+const safeUrl = u => { try{ const x = new URL(u); return /^https?:$/.test(x.protocol) ? x.href : ""; }catch(e){ return ""; } };
+const rid = () => "m" + Date.now().toString(36) + Math.random().toString(36).slice(2,7);
+let tt; function toast(m){ const t=$("#toast"); t.textContent=m; t.hidden=false; clearTimeout(tt); tt=setTimeout(()=>t.hidden=true,2600); }
+function count(arr, key, opts){ const m = {}; opts.forEach(o=>m[o]=0); arr.forEach(x=>{ const v = x[key]; if(v in m) m[v]++; }); return m; }
+
+/* ================= Penyimpanan (server PHP) ================= */
+const S = {mode:"loading", alumni:{}, owners:{}, tracer:{}, tracerOwner:{}, lowongan:{}, uid:null, user:null, myId:null, admin:false, canWrite:false, kodeWajib:true, err:"", stale:false};
+let DL = null;
+async function api(a, payload, q){
+  const opt = payload === undefined ? {credentials:"same-origin"} :
+    {method:"POST", credentials:"same-origin", headers:{"Content-Type":"application/json","X-Requested-With":"AlumniPTI"}, body:JSON.stringify(payload)};
+  let r; try{ r = await fetch(`api.php?a=${a}${q||""}`, opt); }catch(e){ throw new Error("Server tidak dapat dihubungi. Periksa koneksi internet."); }
+  const txt = await r.text(); let j;
+  try{ j = JSON.parse(txt); }catch(e){
+    if(location.protocol === "file:") throw new Error("Portal dibuka dari file di komputer. Unggah folder ke hosting lalu buka lewat alamat web (https://…).");
+    if(r.status === 404) throw new Error("File api.php tidak ditemukan. Pastikan api.php dan config.php diunggah ke folder yang sama dengan index.html.");
+    if(/^\s*<\?php/.test(txt)) throw new Error("Hosting ini tidak menjalankan PHP (hosting statis). Gunakan hosting yang mendukung PHP, misalnya cPanel.");
+    const snip = txt.replace(/<[^>]+>/g," ").replace(/\s+/g," ").trim().slice(0,160);
+    throw new Error(`Server mengirim respons tidak terduga (kode ${r.status})${snip?": "+snip:""}. Buka cek.php di alamat yang sama untuk memeriksa hosting.`);
+  }
+  if(!r.ok || j.error) throw new Error(j.error || "Terjadi kesalahan di server.");
+  return j;
+}
+async function loadCol(col){
+  const j = await api("list", undefined, "&col="+col), o = {};
+  j.items.forEach(it => { o[it.id] = it.data; if(col==="alumni"){ S.owners[it.id] = it.owner; if(it.mine) S.myId = it.id; } if(col==="tracer") S.tracerOwner[it.id] = it.owner; });
+  S[col] = o;
+}
+async function loadAll(){
+  const me = await api("me");
+  S.user = me.user; S.uid = me.user ? me.user.id : null; S.admin = !!(me.user && me.user.role === "admin"); S.canWrite = !!me.user; S.kodeWajib = me.kodeWajib; S.myId = me.alumniId || null;
+  await Promise.all([loadCol("alumni"), loadCol("lowongan"), loadCol("tracer")]);
+}
+async function put(col, id, data){ await api("save", {col, id, data}); await loadCol(col); if(col==="alumni" && !S.myId){ const me = await api("me"); S.myId = me.alumniId; } render(); }
+async function del(col, id){ await api("delete", {col, id}); if(col==="alumni" && id===S.myId) S.myId = null; await loadCol(col); render(); }
+function dbErr(e){ return (e && e.message) || "Gagal menyimpan. Coba lagi sebentar."; }
+async function init(){
+  render();
+  try{ await loadAll(); S.mode = "api"; S.err = ""; }catch(e){ S.mode = "api"; S.err = e.message; }
+  render();
+  setInterval(async () => { if(document.hidden || formDirty || !$("#ov").hidden) return; try{ await Promise.all([loadCol("alumni"), loadCol("lowongan"), loadCol("tracer")]); render(); }catch(e){} }, 60000);
+}
+
+/* ================= Akun ================= */
+function authModal(mode){
+  const reg = mode === "daftar";
+  openModal(`<div class="card-h"><h2>${reg?"Daftar akun alumni":"Masuk ke portal alumni"}</h2></div><div class="card-b"><form class="form" id="fAuth" data-mode="${mode}" novalidate>
+    ${reg?`<label>Nama lengkap<input name="nama" autocomplete="name" required></label><label>NIM <span class="hint">agar data lama Anda di prodi otomatis terhubung</span><input name="nim" inputmode="numeric"></label>`:""}
+    <label>Email<input name="email" type="email" autocomplete="email" required></label>
+    <label>Kata sandi${reg?` <span class="hint">minimal 8 karakter</span>`:""}<input name="password" type="password" autocomplete="${reg?"new-password":"current-password"}" required></label>
+    <div class="err" id="aErr" hidden></div>
+    <div class="form-f" style="justify-content:space-between"><button type="button" class="btn btn-ghost btn-sm" data-act="auth" data-id="${reg?"masuk":"daftar"}">${reg?"Sudah punya akun? Masuk":"Belum punya akun? Daftar"}</button>
+      <span style="display:flex;gap:8px"><button type="button" class="btn btn-ghost" data-act="close">Batal</button><button type="submit" class="btn btn-gold">${reg?"Daftar":"Masuk"}</button></span></div>
+    ${reg?"":`<p class="muted" style="margin:0;font-size:12.5px">Lupa kata sandi? Hubungi admin prodi untuk mengatur ulang.</p>`}
+  </form></div>`);
+}
+function needLogin(title, what){
+  return `<div class="page-h"><div><h1>${title}</h1></div></div><section class="card"><div class="card-b" style="text-align:center;padding:30px 18px">
+    <p style="margin:0 0 16px;font-size:15px">Masuk atau daftar akun alumni untuk ${what}.</p>
+    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap"><button class="btn btn-gold" data-act="auth" data-id="daftar">Daftar akun alumni</button><button class="btn btn-primary" data-act="auth" data-id="masuk">Masuk</button></div></div></section>`;
+}
+let usersCache = null;
+function akun(){
+  if(!S.user) return needLogin("Akun Saya", "mengelola akun");
+  const users = S.admin ? usersCache : null;
+  if(S.admin && !users){ api("users").then(j => { usersCache = j.items; render(); }).catch(e => toast(e.message)); }
+  return `<div class="page-h"><div><h1>Akun Saya</h1><p>${esc(S.user.nama)} · ${esc(S.user.email)} · ${S.admin?"Admin prodi":"Alumni"}</p></div><button class="btn btn-ghost" data-act="logout">Keluar</button></div>
+  <section class="card"><div class="card-h"><h2>Ganti kata sandi</h2></div><div class="card-b"><form class="form" id="fPw" novalidate><div class="fgrid">
+    <label>Kata sandi lama<input name="lama" type="password" autocomplete="current-password"></label><label>Kata sandi baru <span class="hint">minimal 8 karakter</span><input name="baru" type="password" autocomplete="new-password"></label></div>
+    <div class="err" id="pErr" hidden></div><div class="form-f"><button type="submit" class="btn btn-gold">Simpan kata sandi</button></div></form></div></section>
+  ${S.admin ? `<section class="card"><div class="card-h"><h2>Akun terdaftar</h2><button class="btn btn-ghost btn-sm" data-act="reload-users">Muat ulang</button></div><div class="card-b">
+    ${!users ? `<p class="empty">Memuat…</p>` : `<div class="tbl"><table class="t"><thead><tr><th>Nama</th><th>Email</th><th>Peran</th><th>Terdaftar</th><th></th></tr></thead><tbody>
+    ${users.map(x=>`<tr><td>${esc(x.nama)}</td><td>${esc(x.email)}</td><td>${x.role==="admin"?'<span class="tag t-blue">Admin</span>':'<span class="tag t-gray">Alumni</span>'}</td><td>${esc(new Date(x.dibuat).toLocaleDateString("id-ID"))}</td>
+      <td>${x.role==="admin"?"":`<button class="btn btn-ghost btn-sm" data-act="resetpw" data-id="${esc(x.id)}">Atur ulang sandi</button> <button class="btn btn-ghost btn-sm" data-act="deluser" data-id="${esc(x.id)}" style="color:var(--danger)">Hapus</button>`}</td></tr>`).join("")}</tbody></table></div>`}
+    <p class="muted" style="font-size:12.5px;margin:10px 0 0">Akun admin diatur di file config.php di hosting.</p></div></section>` : ""}`;
+}
+
+/* ================= Data turunan ================= */
+const alumniList = () => Object.entries(S.alumni).map(([id,a]) => ({id, ...a}));
+const visibleAlumni = () => alumniList().filter(a => (a.tampil !== false && a.nama) || S.admin || a.id === S.myId);
+const myAlumni = () => S.myId ? S.alumni[S.myId] : null;
+const myTracer = () => S.uid ? S.tracer["t"+S.uid] : null;
+const employed = a => ["Bekerja","Wirausaha","Bekerja dan studi lanjut"].includes(a.status);
+function summary(){
+  const L = alumniList(), n = L.length;
+  const kerja = L.filter(employed);
+  const tunggu = kerja.map(a=>+a.tunggu).filter(v=>!isNaN(v) && v>=0);
+  const sesuaiN = kerja.filter(a=>a.sesuai==="Sangat sesuai"||a.sesuai==="Sesuai").length;
+  return {n, kerja:kerja.length, serap:pct(kerja.length, L.filter(a=>a.status!=="Studi lanjut").length),
+    tungguAvg: tunggu.length ? tunggu.reduce((s,v)=>s+v,0)/tunggu.length : null,
+    tunggu6: pct(tunggu.filter(v=>v<=6).length, tunggu.length), sesuai: pct(sesuaiN, kerja.filter(a=>a.sesuai).length)};
+}
+
+/* ================= Render ================= */
+function bars(map, total, color){
+  const entries = Object.entries(map), max = Math.max(1, ...entries.map(e=>e[1]));
+  return `<div class="bars">${entries.map(([k,v])=>`<div class="bar"><span>${esc(k)}</span><div class="bar-t"><div class="bar-f" style="width:${v/max*100}%;background:${color||"var(--primary)"}"></div></div><b>${v}${total?` <span class="muted" style="font-weight:600">(${fmt(pct(v,total),0)}%)</span>`:""}</b></div>`).join("")}</div>`;
+}
+function whoHTML(){
+  if(S.mode === "loading") return `<span class="lbl">Memuat…</span>`;
+  if(!S.user) return `<button class="btn btn-ghost btn-sm" data-act="auth" data-id="masuk">Masuk</button><button class="btn btn-gold btn-sm" data-act="auth" data-id="daftar">Daftar</button>`;
+  return `<a href="#akun" class="pill" style="text-decoration:none" title="Akun saya">${esc(S.user.nama.split(" ")[0])} · ${S.admin?"Admin":"Alumni"}</a><button class="btn btn-ghost btn-sm" data-act="logout">Keluar</button>`;
+}
+function banner(){
+  let h = "";
+  if(S.err) h += `<div class="note bad">${esc(S.err)}</div>`;
+  if(S.user && !S.admin && !S.myId) h += `<div class="note">Selamat datang, ${esc(S.user.nama)}. Lengkapi <a href="#profil">profil alumni</a> Anda agar tampil di direktori.</div>`;
+  return h;
+}
+
+const PAGES = {beranda, direktori, statistik, tracer, karier, cerita, profil, akun};
+function render(){
+  const page = (location.hash||"#beranda").slice(1).split("/")[0];
+  const fn = PAGES[page] || beranda;
+  document.querySelectorAll("#nav a").forEach(a => a.classList.toggle("on", a.getAttribute("href") === "#"+(PAGES[page]?page:"beranda")));
+  const cur = document.querySelector("#nav a.on"); $("#crumb").innerHTML = `<span>Alumni PTI /</span> ${esc(cur ? cur.textContent : page==="akun" ? "Akun Saya" : "Beranda")}`;
+  $("#shell").classList.remove("open");
+  $("#who").innerHTML = whoHTML();
+  const keep = document.activeElement && document.activeElement.id && $("#app").contains(document.activeElement) ? {id:document.activeElement.id, pos:document.activeElement.selectionStart} : null;
+  if(formDirty && (page === "profil" || page === "tracer")) { $("#who").innerHTML = whoHTML(); return; }
+  $("#app").innerHTML = (S.mode==="loading" ? `<div class="empty">Memuat data alumni…</div>` : banner() + fn());
+  if(keep){ const el = document.getElementById(keep.id); if(el){ el.focus(); try{ el.setSelectionRange(keep.pos, keep.pos); }catch(e){} } }
+}
+let formDirty = false;
+window.addEventListener("hashchange", () => { formDirty = false; window.scrollTo(0,0); render(); });
+
+function beranda(){
+  const s = summary(), jobs = Object.entries(S.lowongan).map(([id,j])=>({id,...j})).filter(j=>!j.batas || j.batas >= new Date().toISOString().slice(0,10)).sort((a,b)=>(b.dibuat||"").localeCompare(a.dibuat||"")).slice(0,3);
+  const stories = visibleAlumni().filter(a=>a.testimoni && a.tampil!==false).slice(0,3);
+  return `<section class="hero"><span class="eyebrow">Ikatan Alumni Prodi PTI</span><h1>Jejaring Alumni Pendidikan Teknologi Informasi</h1>
+    <p>Tempat alumni Prodi S1 PTI Universitas Raharja terhubung, berbagi kabar karier, dan memberi masukan bagi pengembangan kurikulum melalui tracer study.</p>
+    <div class="acts">${S.user?`<a class="btn btn-primary" href="#profil">${myAlumni()?"Perbarui profil saya":"Lengkapi profil saya"}</a>`:`<button class="btn btn-primary" data-act="auth" data-id="daftar">Daftar sebagai alumni</button>`}<a class="btn btn-ghost" href="#tracer">${S.admin?"Lihat hasil tracer study":myTracer()?"Lihat tracer study saya":"Isi tracer study"}</a></div></section>
+  <div class="stats">
+    <div class="stat"><b>${s.n}</b><span>Alumni terdata</span></div>
+    <div class="stat"><b>${fmt(s.serap,0)}${s.serap===null?"":"%"}</b><span>Bekerja atau berwirausaha</span></div>
+    <div class="stat"><b>${s.tungguAvg===null?"–":fmt(s.tungguAvg)+" bln"}</b><span>Rata-rata masa tunggu kerja</span></div>
+    <div class="stat"><b>${fmt(s.sesuai,0)}${s.sesuai===null?"":"%"}</b><span>Pekerjaan sesuai bidang</span></div>
+  </div>
+  <div class="grid2">
+    <section class="card"><div class="card-h"><h2>Info karier terbaru</h2><a href="#karier" class="btn btn-ghost btn-sm">Semua</a></div><div class="card-b" style="display:grid;gap:10px">
+      ${jobs.length ? jobs.map(jobHTML).join("") : `<p class="empty">Belum ada info lowongan.${S.admin?` <a href="#karier">Tambahkan</a>`:""}</p>`}</div></section>
+    <section class="card"><div class="card-h"><h2>Cerita alumni</h2><a href="#cerita" class="btn btn-ghost btn-sm">Semua</a></div><div class="card-b" style="display:grid;gap:12px">
+      ${stories.length ? stories.map(storyHTML).join("") : `<p class="empty">Belum ada cerita. Alumni dapat menulis cerita di Profil Saya.</p>`}</div></section>
+  </div>`;
+}
+
+let dq = "", dTh = "", dSt = "", dPl = "";
+function direktori(){
+  const L = visibleAlumni(), years = [...new Set(L.map(a=>a.lulus).filter(Boolean))].sort().reverse();
+  const q = dq.toLowerCase();
+  const rows = L.filter(a => (!dTh || String(a.lulus)===dTh) && (!dSt || a.status===dSt) && (!dPl || a.profil===dPl) &&
+    (!q || [a.nama,a.instansi,a.pekerjaan,a.kota].join(" ").toLowerCase().includes(q))).sort((a,b)=>(b.lulus||0)-(a.lulus||0) || String(a.nama).localeCompare(String(b.nama)));
+  return `<div class="page-h"><div><h1>Direktori Alumni</h1><p>${L.length} alumni terdata. Hanya alumni yang mengizinkan profilnya tampil yang terlihat oleh publik.</p></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">${S.admin?`<button class="btn btn-ghost" data-act="csv-alumni">Ekspor CSV</button><button class="btn btn-primary" data-act="add-alumni">＋ Tambah data alumni</button>`:""}${S.user?`<a class="btn btn-gold" href="#profil">${myAlumni()?"Profil saya":"Lengkapi profil saya"}</a>`:`<button class="btn btn-gold" data-act="auth" data-id="daftar">Daftar sebagai alumni</button>`}</div></div>
+  <div class="filters"><input id="dq" type="search" placeholder="Cari nama, instansi, pekerjaan, kota…" value="${esc(dq)}" aria-label="Cari alumni">
+    <select id="dTh" aria-label="Tahun lulus"><option value="">Semua tahun lulus</option>${years.map(y=>`<option ${dTh==String(y)?"selected":""}>${esc(y)}</option>`).join("")}</select>
+    <select id="dSt" aria-label="Status"><option value="">Semua status</option>${STATUS.map(x=>`<option ${dSt===x?"selected":""}>${x}</option>`).join("")}</select>
+    <select id="dPl" aria-label="Profil lulusan"><option value="">Semua profil lulusan</option>${PROFIL.map(([k,v])=>`<option value="${k}" ${dPl===k?"selected":""}>${v}</option>`).join("")}</select></div>
+  ${rows.length ? `<div class="grid3">${rows.map(alumniCard).join("")}</div>` : `<div class="card"><p class="empty">${L.length ? "Tidak ada alumni yang cocok dengan pencarian." : "Belum ada alumni terdaftar. Jadilah yang pertama mendaftar."}</p></div>`}`;
+}
+function statusTag(st){ const c = st==="Belum bekerja" ? "t-red" : st==="Studi lanjut" ? "t-blue" : st==="Wirausaha" ? "t-gold" : "t-green"; return `<span class="tag ${c}">${esc(st||"–")}</span>`; }
+function alumniCard(a){
+  const pl = (PROFIL.find(p=>p[0]===a.profil)||[])[1], li = safeUrl(a.linkedin);
+  const mine = a.id === S.myId;
+  return `<article class="acard"><div class="acard-top"><span class="av">${esc(initials(a.nama))}</span><div style="min-width:0"><h3>${esc(a.nama)}</h3><div class="sub">Angkatan ${esc(a.angkatan||"–")} · Lulus ${esc(a.lulus||"–")}</div></div></div>
+    <div>${statusTag(a.status)} ${pl?`<span class="tag t-gray">${esc(pl)}</span>`:""} ${a.tampil===false?`<span class="tag t-red">disembunyikan</span>`:""}</div>
+    <dl class="kv">${a.pekerjaan?`<dt>Posisi</dt><dd>${esc(a.pekerjaan)}</dd>`:""}${a.instansi?`<dt>Instansi</dt><dd>${esc(a.instansi)}</dd>`:""}${a.kota?`<dt>Kota</dt><dd>${esc(a.kota)}</dd>`:""}</dl>
+    <div class="acard-f">${li?`<a href="${esc(li)}" target="_blank" rel="noopener noreferrer" class="btn btn-ghost btn-sm">LinkedIn</a>`:""}${a.kontak && a.tampilKontak?`<span class="muted" style="font-size:12.5px">${esc(a.kontak)}</span>`:""}
+      ${mine?`<a class="btn btn-gold btn-sm" href="#profil">Edit</a>`:""}${S.admin && !mine?`<button class="btn btn-ghost btn-sm" data-act="edit-alumni" data-id="${esc(a.id)}">Edit</button><button class="btn btn-ghost btn-sm" data-act="del-alumni" data-id="${esc(a.id)}" style="color:var(--danger)">Hapus</button>`:""}</div></article>`;
+}
+
+function statistik(){
+  const L = alumniList(), s = summary(), kerja = L.filter(employed);
+  const lulus = {}; L.forEach(a=>{ if(a.lulus) lulus[a.lulus] = (lulus[a.lulus]||0)+1; });
+  const lulusSorted = Object.fromEntries(Object.entries(lulus).sort((a,b)=>a[0]-b[0]));
+  const tg = {"≤ 3 bulan":0,"4–6 bulan":0,"7–12 bulan":0,"> 12 bulan":0};
+  kerja.forEach(a=>{ const v=+a.tunggu; if(isNaN(v)||a.tunggu==="") return; tg[v<=3?"≤ 3 bulan":v<=6?"4–6 bulan":v<=12?"7–12 bulan":"> 12 bulan"]++; });
+  const pl = {}; PROFIL.forEach(([k,v])=>pl[v]=0); kerja.forEach(a=>{ const n=(PROFIL.find(p=>p[0]===a.profil)||[])[1]; if(n) pl[n]++; });
+  if(!L.length) return `<div class="page-h"><div><h1>Statistik Alumni</h1></div></div><div class="card"><p class="empty">Statistik akan tampil setelah alumni mendaftar.</p></div>`;
+  return `<div class="page-h"><div><h1>Statistik Alumni</h1><p>Dihitung otomatis dari ${s.n} data alumni. Indikator ini mendukung evaluasi profil lulusan dan akreditasi program studi.</p></div></div>
+  <div class="stats">
+    <div class="stat"><b>${fmt(s.serap,0)}%</b><span>Keterserapan kerja (di luar studi lanjut)</span></div>
+    <div class="stat"><b>${s.tungguAvg===null?"–":fmt(s.tungguAvg)}</b><span>Rata-rata masa tunggu (bulan)</span></div>
+    <div class="stat"><b>${fmt(s.tunggu6,0)}${s.tunggu6===null?"":"%"}</b><span>Mendapat kerja ≤ 6 bulan</span></div>
+    <div class="stat"><b>${fmt(s.sesuai,0)}${s.sesuai===null?"":"%"}</b><span>Kesesuaian bidang kerja</span></div>
+  </div>
+  <div class="grid2">
+    <section class="card"><div class="card-h"><h2>Status alumni</h2></div><div class="card-b">${bars(count(L,"status",STATUS), L.length)}</div></section>
+    <section class="card"><div class="card-h"><h2>Masa tunggu mendapat pekerjaan pertama</h2></div><div class="card-b">${bars(tg, kerja.length, "var(--gold)")}</div></section>
+    <section class="card"><div class="card-h"><h2>Kesesuaian bidang kerja dengan bidang studi</h2></div><div class="card-b">${bars(count(kerja,"sesuai",SESUAI), kerja.length, "var(--c3)")}</div></section>
+    <section class="card"><div class="card-h"><h2>Jenis tempat kerja</h2></div><div class="card-b">${bars(count(kerja,"jenisInstansi",INSTANSI), kerja.length)}</div></section>
+    <section class="card"><div class="card-h"><h2>Sebaran menurut profil lulusan</h2></div><div class="card-b">${bars(pl, kerja.length, "var(--c4)")}</div></section>
+    <section class="card"><div class="card-h"><h2>Alumni per tahun lulus</h2></div><div class="card-b">${Object.keys(lulusSorted).length?bars(lulusSorted, 0, "var(--c5)"):`<p class="empty">Belum ada data tahun lulus.</p>`}</div></section>
+  </div>`;
+}
+
+/* ---------- Profil saya / form alumni ---------- */
+let editTarget = null;
+function alumniFormHTML(a, title, idAttr){
+  a = a || {};
+  const opt = (arr, v) => arr.map(x=>`<option ${v===x?"selected":""}>${esc(x)}</option>`).join("");
+  return `<form class="form" id="fAlumni" data-id="${esc(idAttr||"")}" novalidate>
+    <div class="fgrid">
+      <label class="full">Nama lengkap<input name="nama" value="${esc(a.nama)}" required autocomplete="name"></label>
+      <label>NIM<input name="nim" value="${esc(a.nim)}" inputmode="numeric"></label>
+      <label>Kota domisili<input name="kota" value="${esc(a.kota)}"></label>
+      <label>Tahun masuk (angkatan)<input name="angkatan" type="number" min="1990" max="2100" value="${esc(a.angkatan)}"></label>
+      <label>Tahun lulus<input name="lulus" type="number" min="1990" max="2100" value="${esc(a.lulus)}" required></label>
+      <label>Status saat ini<select name="status" required><option value="">Pilih</option>${opt(STATUS,a.status)}</select></label>
+      <label>Masa tunggu kerja pertama <span class="hint">bulan setelah lulus; 0 bila sudah bekerja sebelum lulus</span><input name="tunggu" type="number" min="0" max="120" value="${esc(a.tunggu)}"></label>
+      <label>Posisi / jabatan<input name="pekerjaan" value="${esc(a.pekerjaan)}" placeholder="mis. Guru Informatika"></label>
+      <label>Nama instansi / usaha<input name="instansi" value="${esc(a.instansi)}"></label>
+      <label>Jenis tempat kerja<select name="jenisInstansi"><option value="">Pilih</option>${opt(INSTANSI,a.jenisInstansi)}</select></label>
+      <label>Kesesuaian dengan bidang studi<select name="sesuai"><option value="">Pilih</option>${opt(SESUAI,a.sesuai)}</select></label>
+      <label class="full">Profil lulusan yang paling sesuai dengan pekerjaan<select name="profil"><option value="">Pilih</option>${PROFIL.map(([k,v])=>`<option value="${k}" ${a.profil===k?"selected":""}>${v}</option>`).join("")}</select></label>
+      <label>Tautan LinkedIn <span class="hint">opsional</span><input name="linkedin" type="url" value="${esc(a.linkedin)}" placeholder="https://linkedin.com/in/…"></label>
+      <label>Kontak (email/WA) <span class="hint">opsional</span><input name="kontak" value="${esc(a.kontak)}"></label>
+      <label class="full">Cerita atau pesan untuk adik tingkat <span class="hint">opsional, tampil di halaman Cerita Alumni</span><textarea name="testimoni" maxlength="800">${esc(a.testimoni)}</textarea></label>
+      <label class="check full"><input type="checkbox" name="tampil" ${a.tampil===false?"":"checked"}> Tampilkan profil saya di direktori alumni</label>
+      <label class="check full"><input type="checkbox" name="tampilKontak" ${a.tampilKontak?"checked":""}> Tampilkan kontak saya kepada pengunjung direktori</label>
+    </div>
+    <div class="err" id="fErr" hidden></div>
+    <div class="form-f">${title}</div></form>`;
+}
+function readAlumniForm(f){
+  const g = n => (f.elements[n].value || "").trim();
+  const d = {nama:g("nama"), nim:g("nim"), kota:g("kota"), angkatan:g("angkatan")?+g("angkatan"):"", lulus:g("lulus")?+g("lulus"):"", status:g("status"),
+    tunggu:g("tunggu")===""?"":+g("tunggu"), pekerjaan:g("pekerjaan"), instansi:g("instansi"), jenisInstansi:g("jenisInstansi"), sesuai:g("sesuai"), profil:g("profil"),
+    linkedin:g("linkedin"), kontak:g("kontak"), testimoni:g("testimoni"), tampil:f.elements.tampil.checked, tampilKontak:f.elements.tampilKontak.checked, diperbarui:new Date().toISOString()};
+  if(!d.nama) return "Isi nama lengkap.";
+  if(!d.lulus || d.lulus < 1990 || d.lulus > 2100) return "Isi tahun lulus dengan benar.";
+  if(d.angkatan && d.angkatan > d.lulus) return "Tahun masuk tidak boleh setelah tahun lulus.";
+  if(!d.status) return "Pilih status saat ini.";
+  if(d.linkedin && !safeUrl(d.linkedin)) return "Tautan LinkedIn harus diawali https://";
+  return d;
+}
+function profil(){
+  if(!S.user) return needLogin("Profil Saya", "mendaftarkan dan memperbarui data alumni Anda");
+  const a = myAlumni();
+  return `<div class="page-h"><div><h1>${a?"Perbarui Profil Alumni":"Daftar sebagai Alumni"}</h1><p>Data ini dipakai untuk direktori alumni dan statistik keterserapan lulusan Prodi PTI. Hanya Anda dan admin prodi yang dapat mengubahnya. NIM dan kontak tidak ditampilkan kecuali Anda mengizinkan.</p></div></div>
+  <section class="card"><div class="card-b">${alumniFormHTML(a || {nama:S.user.nama, tampil:true}, `${a?`<button type="button" class="btn btn-ghost" data-act="del-mine" style="color:var(--danger)">Hapus profil saya</button>`:""}<button type="submit" class="btn btn-gold">${a?"Simpan perubahan":"Simpan profil"}</button>`, "mine")}</div></section>
+  ${a && !myTracer() ? `<div class="note">Terima kasih sudah mendaftar. Bantu prodi dengan <a href="#tracer">mengisi tracer study</a> (sekitar 5 menit).</div>` : ""}`;
+}
+
+/* ---------- Tracer study ---------- */
+let trTab = "hasil";
+function tracer(){
+  if(S.admin){
+    const tabs = `<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px">${[["hasil","Hasil tracer study"],["isi","Isi formulir"]].map(([k,l])=>`<button class="btn ${trTab===k?"btn-primary":"btn-ghost"}" data-act="tr-tab" data-id="${k}">${l}</button>`).join("")}</div>`;
+    return tabs + (trTab === "isi" ? `<div class="note">Anda mengisi sebagai admin. Jawaban ini ikut dihitung sebagai responden; hapus dari tabel saran bila hanya untuk uji coba.</div>` + tracerForm(myTracer()) : tracerAdmin());
+  }
+  if(!S.user) return needLogin("Tracer Study", "mengisi tracer study");
+  return tracerForm(myTracer());
+}
+function tracerForm(t){
+  t = t || {};
+  const opt = (arr, v) => arr.map(x=>`<option ${v===x?"selected":""}>${esc(x)}</option>`).join("");
+  const sc = (name, val) => [1,2,3,4,5].map(i=>`<td><input type="radio" name="${name}" value="${i}" ${+val===i?"checked":""} aria-label="${i}"></td>`).join("");
+  return `<div class="page-h"><div><h1>Tracer Study Alumni PTI</h1><p>Jawaban Anda hanya dapat dibaca oleh admin prodi dan dipakai untuk evaluasi kurikulum OBE. ${t.diisi?`<b>Terakhir diisi ${new Date(t.diisi).toLocaleDateString("id-ID")}.</b>`:""}</p></div></div>
+  <section class="card"><div class="card-b"><form class="form" id="fTracer" novalidate>
+    <fieldset><legend>A. Masa transisi ke dunia kerja</legend><div class="fgrid">
+      <label>Kapan mulai mencari pekerjaan?<select name="mulai"><option value="">Pilih</option>${opt(["Sebelum lulus","Setelah lulus","Tidak mencari kerja"],t.mulai)}</select></label>
+      <label>Cara utama mendapatkan pekerjaan<select name="cara"><option value="">Pilih</option>${opt(CARA,t.cara)}</select></label>
+      <label>Jumlah lamaran yang dikirim<input name="lamaran" type="number" min="0" max="500" value="${esc(t.lamaran)}"></label>
+      <label>Rentang pendapatan per bulan<select name="gaji"><option value="">Pilih</option>${opt(GAJI,t.gaji)}</select></label>
+      <label class="full">Tingkat pendidikan yang paling tepat untuk pekerjaan Anda<select name="tingkat"><option value="">Pilih</option>${opt(["Lebih tinggi dari S1","Setara S1","Lebih rendah dari S1","Tidak memerlukan pendidikan tinggi"],t.tingkat)}</select></label>
+    </div></fieldset>
+    <fieldset><legend>B. Kompetensi</legend><p class="muted" style="margin:0 0 8px;font-size:13px">1 = sangat rendah, 5 = sangat tinggi. Bandingkan tingkat yang Anda kuasai saat lulus dengan tingkat yang dibutuhkan di pekerjaan.</p>
+      <div class="tbl"><table class="scale"><thead><tr><th>Kompetensi</th><th colspan="5">Dikuasai saat lulus</th><th colspan="5">Dibutuhkan di pekerjaan</th></tr><tr><th></th>${[1,2,3,4,5,1,2,3,4,5].map(i=>`<th>${i}</th>`).join("")}</tr></thead>
+      <tbody>${KOMP.map((k,i)=>`<tr><td>${esc(k)}</td>${sc("a"+i,(t.kuasai||[])[i])}${sc("b"+i,(t.butuh||[])[i])}</tr>`).join("")}</tbody></table></div></fieldset>
+    <fieldset><legend>C. Penilaian terhadap program studi</legend><div class="fgrid">
+      <label>Kepuasan terhadap pembelajaran di Prodi PTI<select name="puas"><option value="">Pilih</option>${[5,4,3,2,1].map(i=>`<option value="${i}" ${+t.puas===i?"selected":""}>${i} – ${["","Sangat tidak puas","Tidak puas","Cukup","Puas","Sangat puas"][i]}</option>`).join("")}</select></label>
+      <label>Mata kuliah yang paling bermanfaat di pekerjaan<input name="mkBerguna" value="${esc(t.mkBerguna)}" placeholder="mis. Pemrograman Web, Micro Teaching"></label>
+      <label class="full">Saran untuk pengembangan kurikulum Prodi PTI<textarea name="saran" maxlength="1500">${esc(t.saran)}</textarea></label>
+    </div></fieldset>
+    <div class="err" id="tErr" hidden></div>
+    <div class="form-f"><button type="submit" class="btn btn-gold">${t.diisi?"Perbarui jawaban":"Kirim tracer study"}</button></div>
+  </form></div></section>`;
+}
+function readTracer(f){
+  const g = n => (f.elements[n]?.value || "").trim();
+  const r = n => { const c = f.querySelector(`input[name="${n}"]:checked`); return c ? +c.value : null; };
+  const d = {mulai:g("mulai"), cara:g("cara"), lamaran:g("lamaran")===""?"":+g("lamaran"), gaji:g("gaji"), tingkat:g("tingkat"),
+    kuasai:KOMP.map((_,i)=>r("a"+i)), butuh:KOMP.map((_,i)=>r("b"+i)), puas:g("puas")?+g("puas"):null, mkBerguna:g("mkBerguna"), saran:g("saran"), diisi:new Date().toISOString()};
+  if(d.kuasai.some(v=>v===null) || d.butuh.some(v=>v===null)) return "Lengkapi penilaian semua kompetensi (dikuasai dan dibutuhkan).";
+  if(!d.puas) return "Pilih tingkat kepuasan.";
+  return d;
+}
+function tracerAdmin(){
+  const T = Object.entries(S.tracer).map(([id,t])=>({id,...t})), n = T.length, nA = alumniList().length;
+  const avg = (key,i) => { const v = T.map(t=>(t[key]||[])[i]).filter(x=>typeof x==="number"); return v.length ? v.reduce((s,x)=>s+x,0)/v.length : null; };
+  const puas = T.map(t=>t.puas).filter(Boolean);
+  const nameOf = id => { const o = S.tracerOwner[id]; const aid = Object.keys(S.owners).find(k => S.owners[k] === o); return (S.alumni[aid]||{}).nama || "Alumni (belum mengisi profil)"; };
+  return `<div class="page-h"><div><h1>Hasil Tracer Study</h1><p>Hanya terlihat oleh admin prodi. ${n} responden dari ${nA} alumni terdata (${fmt(pct(n,nA),0)}${nA?"%":""}).</p></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-ghost" data-act="csv-tracer">Ekspor CSV</button></div></div>
+  ${!n ? `<div class="card"><p class="empty">Belum ada responden. Bagikan alamat portal kepada alumni, lalu minta mereka mendaftar dan mengisi menu Tracer Study.</p></div>` : `
+  <div class="stats">
+    <div class="stat"><b>${n}</b><span>Responden</span></div>
+    <div class="stat"><b>${fmt(puas.length?puas.reduce((s,x)=>s+x,0)/puas.length:null,2)}</b><span>Rata-rata kepuasan (1–5)</span></div>
+    <div class="stat"><b>${fmt(pct(T.filter(t=>t.mulai==="Sebelum lulus").length,n),0)}%</b><span>Mulai mencari kerja sebelum lulus</span></div>
+    <div class="stat"><b>${fmt(pct(T.filter(t=>t.tingkat==="Setara S1"||t.tingkat==="Lebih tinggi dari S1").length,n),0)}%</b><span>Pekerjaan butuh pendidikan ≥ S1</span></div>
+  </div>
+  <section class="card"><div class="card-h"><h2>Kesenjangan kompetensi (dikuasai saat lulus vs dibutuhkan)</h2></div><div class="card-b">
+    <div class="legend"><span><i style="background:var(--primary)"></i>Dikuasai saat lulus</span><span><i style="background:var(--gold)"></i>Dibutuhkan di pekerjaan</span></div>
+    <div class="bars">${KOMP.map((k,i)=>{ const a=avg("kuasai",i), b=avg("butuh",i), gap=(b??0)-(a??0);
+      return `<div style="display:grid;gap:3px"><div style="display:flex;justify-content:space-between;font-size:13px;font-weight:700"><span>${esc(k)}</span><span class="${gap>0.5?"err":"muted"}">selisih ${gap>0?"+":""}${fmt(gap,2)}</span></div>
+        <div class="bar bar2" style="grid-template-columns:1fr 44px"><div class="bar-t"><div class="bar-f" style="width:${(a||0)/5*100}%"></div></div><b>${fmt(a,2)}</b></div>
+        <div class="bar bar2" style="grid-template-columns:1fr 44px"><div class="bar-t"><div class="bar-f" style="width:${(b||0)/5*100}%;background:var(--gold)"></div></div><b>${fmt(b,2)}</b></div></div>`; }).join("")}</div>
+    <p class="muted" style="font-size:12.5px;margin:12px 0 0">Selisih positif berarti kebutuhan di pekerjaan lebih tinggi daripada kompetensi saat lulus. Selisih di atas 0,5 ditandai merah sebagai prioritas perbaikan kurikulum (CQI).</p>
+  </div></section>
+  <div class="grid2">
+    <section class="card"><div class="card-h"><h2>Cara mendapatkan pekerjaan</h2></div><div class="card-b">${bars(count(T,"cara",CARA), n)}</div></section>
+    <section class="card"><div class="card-h"><h2>Rentang pendapatan</h2></div><div class="card-b">${bars(count(T,"gaji",GAJI), n, "var(--c3)")}</div></section>
+  </div>
+  <section class="card"><div class="card-h"><h2>Saran alumni untuk kurikulum</h2></div><div class="card-b"><div class="tbl"><table class="t"><thead><tr><th>Alumni</th><th>MK paling bermanfaat</th><th>Saran</th><th></th></tr></thead><tbody>
+    ${T.filter(t=>t.saran||t.mkBerguna).map(t=>`<tr><td>${esc(nameOf(t.id))}<div class="muted" style="font-size:12px">${t.diisi?new Date(t.diisi).toLocaleDateString("id-ID"):""}</div></td><td>${esc(t.mkBerguna||"–")}</td><td>${esc(t.saran||"–")}</td><td><button class="btn btn-ghost btn-sm" data-act="del-tracer" data-id="${esc(t.id)}" style="color:var(--danger)">Hapus</button></td></tr>`).join("") || `<tr><td colspan="4" class="empty">Belum ada saran tertulis.</td></tr>`}
+  </tbody></table></div></div></section>`}`;
+}
+
+/* ---------- Karier ---------- */
+function jobHTML(j){
+  const today = new Date().toISOString().slice(0,10), past = j.batas && j.batas < today, url = safeUrl(j.tautan);
+  return `<article class="job ${past?"past":""}"><div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><h3>${esc(j.judul)}</h3><span class="tag t-gold">${esc(j.jenis||"")}</span></div>
+    <div class="muted" style="font-size:13px">${esc([j.instansi, j.lokasi, j.batas ? `${past?"ditutup":"batas"} ${new Date(j.batas+"T00:00").toLocaleDateString("id-ID",{day:"numeric",month:"short",year:"numeric"})}` : ""].filter(Boolean).join(" · "))}</div>
+    ${j.deskripsi?`<p style="margin:2px 0;font-size:13.5px;line-height:1.55">${esc(j.deskripsi)}</p>`:""}
+    <div style="display:flex;gap:8px;flex-wrap:wrap">${url?`<a class="btn btn-primary btn-sm" href="${esc(url)}" target="_blank" rel="noopener noreferrer">Lihat lowongan</a>`:""}${S.admin&&j.id?`<button class="btn btn-ghost btn-sm" data-act="edit-job" data-id="${esc(j.id)}">Edit</button><button class="btn btn-ghost btn-sm" data-act="del-job" data-id="${esc(j.id)}" style="color:var(--danger)">Hapus</button>`:""}</div></article>`;
+}
+function karier(){
+  const J = Object.entries(S.lowongan).map(([id,j])=>({id,...j})), today = new Date().toISOString().slice(0,10);
+  const open = J.filter(j=>!j.batas||j.batas>=today).sort((a,b)=>(a.batas||"9999").localeCompare(b.batas||"9999")), closed = J.filter(j=>j.batas&&j.batas<today);
+  return `<div class="page-h"><div><h1>Info Karier</h1><p>Lowongan kerja, magang, dan peluang mengajar yang relevan bagi lulusan Pendidikan Teknologi Informasi.</p></div>${S.admin?`<button class="btn btn-gold" data-act="add-job">＋ Tambah info lowongan</button>`:""}</div>
+  ${open.length ? `<div class="grid2">${open.map(jobHTML).join("")}</div>` : `<div class="card"><p class="empty">Belum ada lowongan yang dibuka.${S.admin?"":" Pantau halaman ini secara berkala."}</p></div>`}
+  ${closed.length ? `<h2 style="font-size:15px;color:var(--ink-2);margin:24px 0 10px">Sudah ditutup</h2><div class="grid2">${closed.map(jobHTML).join("")}</div>` : ""}`;
+}
+function jobForm(j){
+  j = j || {};
+  openModal(`<div class="card-h"><h2>${j.id?"Edit":"Tambah"} info lowongan</h2></div><div class="card-b"><form class="form" id="fJob" data-id="${esc(j.id||"")}" novalidate><div class="fgrid">
+    <label class="full">Posisi / judul<input name="judul" value="${esc(j.judul)}" required></label>
+    <label>Instansi<input name="instansi" value="${esc(j.instansi)}"></label><label>Lokasi<input name="lokasi" value="${esc(j.lokasi)}"></label>
+    <label>Jenis<select name="jenis">${JENIS.map(x=>`<option ${j.jenis===x?"selected":""}>${x}</option>`).join("")}</select></label>
+    <label>Batas pendaftaran<input name="batas" type="date" value="${esc(j.batas)}"></label>
+    <label class="full">Tautan info / pendaftaran<input name="tautan" type="url" value="${esc(j.tautan)}" placeholder="https://"></label>
+    <label class="full">Deskripsi singkat<textarea name="deskripsi" maxlength="800">${esc(j.deskripsi)}</textarea></label></div>
+    <div class="err" id="jErr" hidden></div>
+    <div class="form-f"><button type="button" class="btn btn-ghost" data-act="close">Batal</button><button type="submit" class="btn btn-gold">Simpan</button></div></form></div>`);
+}
+
+/* ---------- Cerita ---------- */
+function storyHTML(a){ const pl = (PROFIL.find(p=>p[0]===a.profil)||[])[1];
+  return `<blockquote class="story" style="margin:0"><p>${esc(a.testimoni)}</p><footer><b>${esc(a.nama)}</b> · Lulus ${esc(a.lulus||"–")}${a.pekerjaan?` · ${esc(a.pekerjaan)}`:""}${a.instansi?`, ${esc(a.instansi)}`:""}${pl?`<br><span class="tag t-gray" style="margin-top:6px">${esc(pl)}</span>`:""}</footer></blockquote>`; }
+function cerita(){
+  const L = visibleAlumni().filter(a=>a.testimoni && (a.tampil!==false || S.admin)).sort((a,b)=>(b.diperbarui||"").localeCompare(a.diperbarui||""));
+  return `<div class="page-h"><div><h1>Cerita Alumni</h1><p>Pengalaman dan pesan alumni untuk adik tingkat Prodi PTI.</p></div>${S.user?`<a class="btn btn-gold" href="#profil">Tulis cerita saya</a>`:""}</div>
+  ${L.length ? `<div class="grid2">${L.map(storyHTML).join("")}</div>` : `<div class="card"><p class="empty">Belum ada cerita alumni.</p></div>`}`;
+}
+
+/* ================= Modal & ekspor ================= */
+function openModal(html){ $("#ovBody").innerHTML = html; $("#ov").hidden = false; const f = $("#ovBody input,#ovBody textarea"); if(f) f.focus(); }
+function closeModal(){ $("#ov").hidden = true; $("#ovBody").innerHTML = ""; }
+$("#ov").addEventListener("click", e => { if(e.target.id === "ov") closeModal(); });
+document.addEventListener("keydown", e => { if(e.key === "Escape" && !$("#ov").hidden) closeModal(); });
+function confirmBox(msg, label, fn){
+  openModal(`<div class="card-h"><h2>Konfirmasi</h2></div><div class="card-b"><p style="margin:0 0 16px">${msg}</p><div class="form-f"><button class="btn btn-ghost" data-act="close">Batal</button><button class="btn btn-danger" id="cfOk">${esc(label)}</button></div></div>`);
+  $("#cfOk").onclick = async () => { closeModal(); try{ await fn(); }catch(e){ toast(dbErr(e)); } };
+}
+function csv(rows){ return "﻿" + rows.map(r => r.map(v => { const s = String(v ?? ""); return /[",\n;]/.test(s) ? `"${s.replace(/"/g,'""')}"` : s; }).join(",")).join("\n"); }
+async function saveFile(name, text){
+  if(S.mode === "db"){ if(!DL){ toast("Unduhan tidak tersedia di tampilan ini."); return; }
+    try{ await DL.save({filename:name, data:new Blob([text], {type:"text/csv"})}); toast("File disimpan"); }catch(e){ toast("Unduhan dibatalkan."); } return; }
+  const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([text],{type:"text/csv"})); a.download = name; document.body.appendChild(a); a.click(); a.remove();
+}
+const stamp = () => new Date().toISOString().slice(0,10);
+function exportAlumni(){
+  const H = ["Nama","NIM","Angkatan","Tahun lulus","Status","Masa tunggu (bulan)","Posisi","Instansi","Jenis tempat kerja","Kesesuaian bidang","Profil lulusan","Kota","LinkedIn","Kontak","Tampil di direktori","Diperbarui"];
+  saveFile(`alumni-pti-${stamp()}.csv`, csv([H, ...alumniList().map(a=>[a.nama,a.nim,a.angkatan,a.lulus,a.status,a.tunggu,a.pekerjaan,a.instansi,a.jenisInstansi,a.sesuai,(PROFIL.find(p=>p[0]===a.profil)||[])[1]||"",a.kota,a.linkedin,a.kontak,a.tampil===false?"Tidak":"Ya",a.diperbarui])]));
+}
+function exportTracer(){
+  const H = ["Nama","Mulai mencari kerja","Cara mendapat kerja","Jumlah lamaran","Rentang pendapatan","Tingkat pendidikan sesuai", ...KOMP.map(k=>"Dikuasai: "+k), ...KOMP.map(k=>"Dibutuhkan: "+k),"Kepuasan","MK bermanfaat","Saran","Diisi"];
+  saveFile(`tracer-study-pti-${stamp()}.csv`, csv([H, ...Object.entries(S.tracer).map(([id,t])=>[(S.alumni[Object.keys(S.owners).find(k=>S.owners[k]===S.tracerOwner[id])]||{}).nama||"",t.mulai,t.cara,t.lamaran,t.gaji,t.tingkat,...KOMP.map((_,i)=>(t.kuasai||[])[i]),...KOMP.map((_,i)=>(t.butuh||[])[i]),t.puas,t.mkBerguna,t.saran,t.diisi])]));
+}
+
+/* ================= Event ================= */
+document.addEventListener("input", e => {
+  if(e.target.closest("#fAlumni,#fTracer") && !e.target.closest("#ov")) formDirty = true;
+  if(e.target.id === "dq"){ dq = e.target.value; render(); }
+});
+document.addEventListener("change", e => {
+  const id = e.target.id;
+  if(id === "dTh"){ dTh = e.target.value; render(); } if(id === "dSt"){ dSt = e.target.value; render(); } if(id === "dPl"){ dPl = e.target.value; render(); }
+  if(e.target.closest("#fAlumni,#fTracer") && !e.target.closest("#ov")) formDirty = true;
+});
+document.addEventListener("click", e => {
+  const b = e.target.closest("[data-act]"); if(!b) return;
+  const act = b.dataset.act, id = b.dataset.id;
+  if(act === "close") closeModal();
+  if(act === "auth") authModal(id);
+  if(act === "logout"){ api("logout", {}).then(async () => { usersCache = null; S.tracer = {}; await loadAll(); location.hash = "#beranda"; render(); toast("Anda telah keluar"); }).catch(e => toast(e.message)); }
+  if(act === "reload-users"){ usersCache = null; render(); }
+  if(act === "resetpw"){ const pw = Math.random().toString(36).slice(2,6) + "-" + Math.random().toString(36).slice(2,8);
+    confirmBox(`Kata sandi akun ini akan diganti menjadi <b>${pw}</b>. Catat dan sampaikan kepada alumni yang bersangkutan, lalu minta ia menggantinya.`, "Atur ulang", async () => { await api("resetpw", {id, password:pw}); toast("Kata sandi diatur ulang: " + pw); }); }
+  if(act === "deluser") confirmBox("Akun ini akan dihapus beserta jawaban tracer study-nya. Data profil alumninya tetap ada di direktori dan dapat dihapus terpisah.", "Hapus akun", async () => { await api("deluser", {id}); usersCache = null; await loadAll(); render(); toast("Akun dihapus"); });
+  if(act === "add-alumni"){ editTarget = "new"; openModal(`<div class="card-h"><h2>Tambah data alumni</h2></div><div class="card-b">${alumniFormHTML({tampil:true}, `<button type="button" class="btn btn-ghost" data-act="close">Batal</button><button type="submit" class="btn btn-gold">Simpan</button>`, editTarget)}</div>`); }
+  if(act === "edit-alumni"){ openModal(`<div class="card-h"><h2>Edit data alumni</h2></div><div class="card-b">${alumniFormHTML(S.alumni[id], `<button type="button" class="btn btn-ghost" data-act="close">Batal</button><button type="submit" class="btn btn-gold">Simpan</button>`, id)}</div>`); }
+  if(act === "del-alumni") confirmBox(`Data alumni <b>${esc((S.alumni[id]||{}).nama)}</b> akan dihapus.`, "Hapus", async () => { await del("alumni", id); toast("Data alumni dihapus"); });
+  if(act === "del-mine") confirmBox("Profil alumni Anda akan dihapus dari direktori dan statistik.", "Hapus profil", async () => { await del("alumni", S.myId); formDirty = false; toast("Profil dihapus"); render(); });
+  if(act === "del-tracer") confirmBox("Jawaban tracer study ini akan dihapus.", "Hapus", async () => { await del("tracer", id); toast("Jawaban dihapus"); });
+  if(act === "add-job") jobForm();
+  if(act === "edit-job") jobForm({id, ...S.lowongan[id]});
+  if(act === "del-job") confirmBox(`Info lowongan <b>${esc((S.lowongan[id]||{}).judul)}</b> akan dihapus.`, "Hapus", async () => { await del("lowongan", id); toast("Lowongan dihapus"); });
+  if(act === "csv-alumni") exportAlumni();
+  if(act === "csv-tracer") exportTracer();
+  if(act === "tr-tab"){ trTab = id; formDirty = false; render(); }
+});
+document.addEventListener("submit", async e => {
+  e.preventDefault();
+  const f = e.target, btn = f.querySelector('button[type="submit"]');
+  const fail = (sel, m) => { const el = f.querySelector(sel); el.textContent = m; el.hidden = false; el.scrollIntoView({block:"nearest"}); };
+  try{
+    if(f.id === "fAlumni"){
+      const d = readAlumniForm(f); if(typeof d === "string") return fail("#fErr", d);
+      const id = f.dataset.id || "mine"; if(!S.user) return fail("#fErr", "Silakan masuk terlebih dahulu.");
+      btn.disabled = true; await put("alumni", id, d); formDirty = false;
+      if(f.closest("#ov")) closeModal(); toast("Data alumni disimpan"); render();
+    }
+    if(f.id === "fTracer"){
+      const d = readTracer(f); if(typeof d === "string") return fail("#tErr", d);
+      if(!S.uid) return fail("#tErr", "Akun Anda belum dapat menyimpan data.");
+      btn.disabled = true; await put("tracer", "mine", d); formDirty = false; trTab = "hasil"; toast("Terima kasih, tracer study tersimpan"); render(); window.scrollTo(0,0);
+    }
+    if(f.id === "fAuth"){
+      const g = n => (f.elements[n] ? f.elements[n].value : "").trim(), reg = f.dataset.mode === "daftar";
+      if(!g("email") || !f.elements.password.value) return fail("#aErr", "Isi email dan kata sandi.");
+      btn.disabled = true;
+      if(reg) await api("register", {nama:g("nama"), nim:g("nim"), email:g("email"), password:f.elements.password.value});
+      else await api("login", {email:g("email"), password:f.elements.password.value});
+      closeModal(); usersCache = null; await loadAll(); toast(reg ? "Akun dibuat. Silakan lengkapi profil Anda." : "Berhasil masuk");
+      if(reg && !S.myId) location.hash = "#profil"; render(); return;
+    }
+    if(f.id === "fPw"){
+      btn.disabled = true; await api("password", {lama:f.elements.lama.value, baru:f.elements.baru.value}); f.reset(); btn.disabled = false; toast("Kata sandi diperbarui"); return;
+    }
+    if(f.id === "fJob"){
+      const g = n => (f.elements[n].value||"").trim();
+      const d = {judul:g("judul"), instansi:g("instansi"), lokasi:g("lokasi"), jenis:g("jenis"), batas:g("batas"), tautan:g("tautan"), deskripsi:g("deskripsi")};
+      if(!d.judul) return fail("#jErr", "Isi judul atau posisi.");
+      if(d.tautan && !safeUrl(d.tautan)) return fail("#jErr", "Tautan harus diawali https://");
+      const id = f.dataset.id || "new"; d.dibuat = (S.lowongan[id]||{}).dibuat || new Date().toISOString();
+      btn.disabled = true; await put("lowongan", id, d); closeModal(); toast("Info lowongan disimpan");
+    }
+  }catch(err){ if(btn) btn.disabled = false; const sel = f.id==="fTracer"?"#tErr":f.id==="fJob"?"#jErr":f.id==="fAuth"?"#aErr":f.id==="fPw"?"#pErr":"#fErr"; fail(sel, dbErr(err)); }
+});
+
+$("#menuBtn").onclick = () => $("#shell").classList.toggle("open");
+$("#scrim").onclick = () => $("#shell").classList.remove("open");
+init();
+</script>
+
+</body>
+</html>
